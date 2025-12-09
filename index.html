@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CV Maker Web</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>Generador de Currículum Vitae</h1>
+    </header>
+    <main class="app">
+      <section class="editor">
+        <button type="button" id="sidebar-toggle" class="sidebar-toggle" aria-expanded="true" aria-controls="cv-form">Menú</button>
+        <!-- Acordeones accesibles según requerimeinto.txt -->
+        <form id="cv-form">
+          <details class="group" open>
+            <summary id="sum-personal">Datos personales</summary>
+            <div class="field">
+              <label for="name">Nombre completo</label>
+              <input
+                id="name"
+                type="text"
+                placeholder="Ej. Ana Pérez"
+                value="Nombre Apellido"
+              />
+            </div>
+            <div class="field">
+              <label for="role">Título profesional</label>
+              <input
+                id="role"
+                type="text"
+                placeholder="Ej. Desarrollador Frontend"
+                value="Título profesional"
+              />
+            </div>
+            <div class="field cols">
+              <div>
+                <label for="email">Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="email@ejemplo.com"
+                  value="email@ejemplo.com"
+                />
+              </div>
+              <div>
+                <label for="phone">Teléfono</label>
+                <input
+                  id="phone"
+                  type="tel"
+                  placeholder="(+34) 600 000 000"
+                  value="(+34) 600 000 000"
+                />
+              </div>
+            </div>
+            <div class="field cols">
+              <div>
+                <label for="location">Ubicación</label>
+                <input
+                  id="location"
+                  type="text"
+                  placeholder="Ciudad, País"
+                  value="Ciudad, País"
+                />
+              </div>
+              <div>
+                <label for="website">Web / LinkedIn</label>
+                <input
+                  id="website"
+                  type="text"
+                  placeholder="https://linkedin.com/in/usuario"
+                  value="linkedin.com/in/usuario"
+                />
+              </div>
+            </div>
+            <div class="field">
+              <label for="photo">Fotografía</label>
+              <input id="photo" type="file" accept="image/*" />
+            </div>
+          </details>
+
+          <details class="group" open>
+            <summary id="sum-summary">Resumen</summary>
+            <div class="field">
+              <textarea
+                id="summary"
+                rows="5"
+                placeholder="Breve descripción profesional"
+              >
+Profesional con experiencia en desarrollo web, enfocado en crear interfaces accesibles y rendimiento óptimo.</textarea
+              >
+            </div>
+          </details>
+
+          <details class="group" open>
+            <summary id="sum-experience">Experiencia</summary>
+            <div class="field">
+              <div id="exp-cards" class="cards"></div>
+              <button type="button" id="add-exp">➕ Agregar experiencia</button>
+            </div>
+          </details>
+
+          <details class="group" open>
+            <summary id="sum-education">Educación</summary>
+            <div class="field">
+              <div id="edu-cards" class="cards"></div>
+              <button type="button" id="add-edu">➕ Agregar educación</button>
+            </div>
+          </details>
+
+          <details class="group" open>
+            <summary id="sum-skills">Habilidades (chips dinámicos y categorías)</summary>
+            <div class="field">
+              <label for="skill-input-frontend">Frontend</label>
+              <div
+                class="chips-input"
+                role="group"
+                aria-label="Habilidades Frontend"
+              >
+                <input
+                  id="skill-input-frontend"
+                  type="text"
+                  placeholder="Escribe habilidad y Enter"
+                />
+                <div
+                  id="skills-chipbox-frontend"
+                  class="chips"
+                  aria-live="polite"
+                ></div>
+              </div>
+            </div>
+            <div class="field">
+              <label for="skill-input-backend">Backend</label>
+              <div
+                class="chips-input"
+                role="group"
+                aria-label="Habilidades Backend"
+              >
+                <input
+                  id="skill-input-backend"
+                  type="text"
+                  placeholder="Escribe habilidad y Enter"
+                />
+                <div
+                  id="skills-chipbox-backend"
+                  class="chips"
+                  aria-live="polite"
+                ></div>
+              </div>
+            </div>
+            <div class="field">
+              <label for="skill-input-tools">Herramientas</label>
+              <div class="chips-input" role="group" aria-label="Herramientas">
+                <input
+                  id="skill-input-tools"
+                  type="text"
+                  placeholder="Escribe herramienta y Enter"
+                />
+                <div
+                  id="skills-chipbox-tools"
+                  class="chips"
+                  aria-live="polite"
+                ></div>
+              </div>
+            </div>
+            <div class="field">
+              <label for="skill-input-soft">Soft skills</label>
+              <div class="chips-input" role="group" aria-label="Soft skills">
+                <input
+                  id="skill-input-soft"
+                  type="text"
+                  placeholder="Escribe habilidad blanda y Enter"
+                />
+                <div
+                  id="skills-chipbox-soft"
+                  class="chips"
+                  aria-live="polite"
+                ></div>
+              </div>
+            </div>
+          </details>
+
+          <details class="group" open>
+            <summary id="sum-languages">Idiomas</summary>
+            <div class="field">
+              <label for="lang-input">Idiomas</label>
+              <div class="chips-input" role="group" aria-label="Idiomas">
+                <input
+                  id="lang-input"
+                  type="text"
+                  placeholder="Ej. Español — Nativo, Inglés — C1"
+                />
+                <div id="lang-chipbox" class="chips" aria-live="polite"></div>
+              </div>
+            </div>
+          </details>
+
+          <details class="group">
+            <summary id="sum-certifications">Certificaciones</summary>
+            <div class="field">
+              <textarea
+                id="certifications"
+                rows="6"
+                placeholder="Una línea por certificación"
+              ></textarea>
+            </div>
+          </details>
+
+          <details class="group">
+            <summary id="sum-projects">Proyectos</summary>
+            <div class="field">
+              <textarea
+                id="projects"
+                rows="6"
+                placeholder="Una línea por proyecto"
+              ></textarea>
+            </div>
+          </details>
+
+          <details class="group">
+            <summary id="sum-achievements">Logros</summary>
+            <div class="field">
+              <textarea
+                id="achievements"
+                rows="6"
+                placeholder="Una línea por logro"
+              ></textarea>
+            </div>
+          </details>
+
+          <details class="group">
+            <summary id="sum-volunteer">Voluntariado</summary>
+            <div class="field">
+              <textarea
+                id="volunteer"
+                rows="6"
+                placeholder="Una línea por experiencia de voluntariado"
+              ></textarea>
+            </div>
+          </details>
+
+          <details class="group">
+            <summary id="sum-courses">Cursos relevantes</summary>
+            <div class="field">
+              <textarea
+                id="courses"
+                rows="6"
+                placeholder="Una línea por curso"
+              ></textarea>
+            </div>
+          </details>
+
+          <details class="group">
+            <summary id="sum-config">Configuración</summary>
+            <div class="field">
+              <label for="template">Plantilla</label>
+              <select id="template">
+                <option value="template-1">Plantilla 1</option>
+                <option value="template-2">Plantilla 2</option>
+              </select>
+            </div>
+          </details>
+
+          <div class="actions">
+            <button type="button" id="btn-pdf">Descargar PDF</button>
+            <button type="button" id="btn-word">Descargar Word</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="preview">
+        <div
+          id="cv"
+          class="cv template-1"
+          role="article"
+          aria-label="Previsualización del CV"
+          aria-live="polite"
+        >
+          <div class="cv-header">
+            <div class="cv-photo">
+              <img id="pv-photo" src="" alt="Foto de perfil" />
+            </div>
+            <div class="cv-title">
+              <h1 id="pv-name">Nombre Apellido</h1>
+              <p id="pv-role">Título profesional</p>
+            </div>
+          </div>
+
+          <div class="cv-contact">
+            <span id="pv-email">email@ejemplo.com</span>
+            <span id="pv-phone">(+34) 600 000 000</span>
+            <span id="pv-location">Ciudad, País</span>
+            <span id="pv-website">linkedin.com/in/usuario</span>
+          </div>
+
+          <div class="cv-section">
+            <h3>Resumen</h3>
+            <p id="pv-summary">
+              Profesional con experiencia en desarrollo web, enfocado en crear
+              interfaces accesibles y rendimiento óptimo.
+            </p>
+          </div>
+
+          <div class="cv-section">
+            <h3>Experiencia</h3>
+            <ul id="pv-experience-list"></ul>
+          </div>
+
+          <div class="cv-section">
+            <h3>Educación</h3>
+            <ul id="pv-education-list"></ul>
+          </div>
+
+          <div class="cv-section">
+            <h3>Idiomas</h3>
+            <div id="pv-languages" class="chips"></div>
+          </div>
+
+          <div class="cv-section">
+            <h3>Habilidades</h3>
+            <div class="skills-grid">
+              <div>
+                <h4>Frontend</h4>
+                <div id="pv-skills-frontend" class="chips"></div>
+              </div>
+              <div>
+                <h4>Backend</h4>
+                <div id="pv-skills-backend" class="chips"></div>
+              </div>
+              <div>
+                <h4>Herramientas</h4>
+                <div id="pv-skills-tools" class="chips"></div>
+              </div>
+              <div>
+                <h4>Soft skills</h4>
+                <div id="pv-skills-soft" class="chips"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cv-section">
+            <h3>Certificaciones</h3>
+            <ul id="pv-cert-list"></ul>
+          </div>
+
+          <div class="cv-section">
+            <h3>Proyectos</h3>
+            <ul id="pv-projects-list"></ul>
+          </div>
+
+          <div class="cv-section">
+            <h3>Logros</h3>
+            <ul id="pv-achievements-list"></ul>
+          </div>
+
+          <div class="cv-section">
+            <h3>Voluntariado</h3>
+            <ul id="pv-volunteer-list"></ul>
+          </div>
+
+          <div class="cv-section">
+            <h3>Cursos relevantes</h3>
+            <ul id="pv-courses-list"></ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/exporter.js"></script>
+    <script src="js/form.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
